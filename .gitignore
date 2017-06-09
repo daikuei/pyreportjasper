@@ -1,6 +1,11 @@
 /venv
 /__pycache__
 /dist
+/examples/*.odt
+/examples/*.pdf
+/examples/*.rtf
+/examples/*.xls
+/examples/*.jasper
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

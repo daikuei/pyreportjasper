@@ -45,7 +45,7 @@ class TestJasperPy(TestCase):
         # test
         self.assertEqual(
             self.jasper.process(self.input_file,
-                                format_list=['pdf', 'odt', 'xls']), 0)
+                                format_list=['pdf', 'odt', 'xls', 'rtf']), 0)
 
     def test_list_parameters(self):
         self.input_file = 'examples/hello_world_params.jrxml'
@@ -59,6 +59,7 @@ class TestJasperPy(TestCase):
                                          'This is the description'
                                          ' of parameter myImage']
                          })
+        self.assertEqual(self.jasper.process(self.input_file, parameters={'myString': 'contém'}, format_list=['pdf'], locale='pt_BR'),0)     
 
     def test_execute(self):
         self.assertEqual(self.jasper.execute(), 0)

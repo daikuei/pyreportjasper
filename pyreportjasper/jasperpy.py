@@ -70,7 +70,7 @@ class JasperPy:
         return self.execute()
 
     def process(self, input_file, output_file=False, format_list=['pdf'],
-                parameters={}, db_connection={}, locale='pt_BR', resource=""):
+                parameters={}, db_connection={}, locale='pt_BR', resource="" , jvm_defines={}):
 
         if not input_file:
             raise NameError('No input file!')
@@ -82,6 +82,15 @@ class JasperPy:
             raise NameError("'format_list' value is not list!")
 
         command = self.path_executable + '/' + EXECUTABLE
+
+        # add support
+        command += ' -D'
+        if len(jvm_defines) > 0:    
+            for key, value in jvm_defines.items():
+                param = key + '="' + value + '" '
+                command += "" + param + " "
+        else:
+            command += "param=none "
 
         command += " --locale %s" % locale
         command += ' process '
@@ -97,6 +106,7 @@ class JasperPy:
             for key, value in parameters.items():
                 param = key + '="' + value + '" '
                 command += " " + param + " "
+        
 
         if len(db_connection) > 0:
             command += ' -t ' + db_connection['driver']
@@ -112,6 +122,10 @@ class JasperPy:
 
             if 'database' in db_connection:
                 command += ' -n ' + db_connection['database']
+
+            # Add AWS db_conn_properties support
+            if 'db_conn_properties' in db_connection:
+                command += ' --db-conn-properties ' + db_connection['db_conn_properties']
 
             if 'port' in db_connection:
                 command += ' --db-port ' + db_connection['port']

@@ -23,4 +23,6 @@ else
 fi
 
 #SCRIPTPATH="$(dirname $0)"
-java -jar "$HOME_FOLDER/lib/jasperstarter.jar" "$@"
+sys_parm=${1}
+shift
+java ${sys_parm} -jar "$HOME_FOLDER/lib/jasperstarter.jar" "$@"
